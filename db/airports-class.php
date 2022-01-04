@@ -29,7 +29,11 @@ class Airports {
      */
 	public function create ($data) {
         $sql= "INSERT INTO airports (name, latitude, longitude) VALUES ('$data->name', '$data->latitude', '$data->longitude')";
-        $query = $this->db->query($sql);
+
+        if ($this->db->query($sql)) {
+            return true;
+        }
+        return false;
 	}
 
     /**
@@ -59,22 +63,36 @@ class Airports {
      *
      * @return boolean
      */
-	public function update() {
+	public function update($data) {
 
-        $sql="UPDATE airoports SET NAME = 'Montreal - Canada' WHERE id = 4";
+        $sql="UPDATE airports SET NAME = '$data->name' WHERE id = id = :id";
         $query = $this->db->query($sql);
+        $query->bindValue(':id', $data->id);
+        $query->execute();
+        
+        if ($query) {
+            return true;
+        }
+        return false;
+        
 	}
 
     /**
-     * Delete user
+     * Delete airport
      *
      * @return boolean
      */
-	public function delete () {
+	public function delete ($data) {
+        $sql = "DELETE FROM airports WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $query->bindValue(':id', $data->id);
+        $query->execute();
 
-        $sql="DELETE FROM airports WHERE id = 4";
-        $query = $this->db->query($sql);
-	}
+        if ($query) {
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>

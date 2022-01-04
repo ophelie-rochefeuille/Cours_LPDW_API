@@ -9,6 +9,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Méthode autorisée
 // header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE");
 
 // Durée de vie de la requête
 header("Access-Control-Max-Age: 3600");
